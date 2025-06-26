@@ -42,7 +42,8 @@ log_error() {
 truncate_diff_if_needed() {
     local content="$1"
     local size=${#content}
-    local size_mb=$(awk "BEGIN {printf \"%.2f\", $size/1000000}")
+    local size_mb
+    size_mb=$(awk "BEGIN {printf \"%.2f\", $size/1000000}")
     
     log_info "Diff size: ${size_mb}MB"
     
@@ -176,7 +177,8 @@ get_combined_rules() {
     fi
     
     local rules_size=${#combined_rules}
-    local rules_size_mb=$(awk "BEGIN {printf \"%.2f\", $rules_size/1000000}")
+    local rules_size_mb
+    rules_size_mb=$(awk "BEGIN {printf \"%.2f\", $rules_size/1000000}")
     log_info "Rules size: ${rules_size_mb}MB"
     
     echo "$combined_rules"
@@ -264,7 +266,8 @@ send_api_request() {
     log_info "Sending request to API..."
     
     local payload_size=${#json_payload}
-    local payload_size_mb=$(awk "BEGIN {printf \"%.2f\", $payload_size/1000000}")
+    local payload_size_mb
+    payload_size_mb=$(awk "BEGIN {printf \"%.2f\", $payload_size/1000000}")
     log_info "Payload size: ${payload_size_mb}MB"
     
     # Send request and capture response with status
@@ -307,9 +310,11 @@ display_content() {
     
     echo
     echo "$title"
-    echo "$(printf '=%.0s' {1..50})"
+    printf '=%.0s' {1..50}
+    echo
     echo "$content"
-    echo "$(printf '=%.0s' {1..50})"
+    printf '=%.0s' {1..50}
+    echo
     echo
 }
 
