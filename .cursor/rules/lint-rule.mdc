@@ -9,7 +9,6 @@ alwaysApply: false
 ## File Formatting
 
 - All YAML files must end with a single newline character
-- Remove all trailing whitespace from lines
 - Use consistent indentation (2 spaces for YAML files)
 - Maximum line length should not exceed 200 characters
 
