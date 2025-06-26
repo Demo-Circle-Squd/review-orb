@@ -19,4 +19,6 @@ steps:
 
   - run:
       name: Run Rule Review
-      command: <<include(scripts/review.sh)>> << parameters.base_branch >> << parameters.provider >>
+      command: |
+        <<include(scripts/review.sh)>>
+        main "<< parameters.base_branch >>" "<< parameters.provider >>"

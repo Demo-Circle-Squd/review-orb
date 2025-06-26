@@ -2,7 +2,7 @@
 
 # Rule Review Script
 # This script captures git diff and sends it to the API for rule review
-# Usage: ./rule-review.sh [base_branch]
+# Usage: ./rule-review.sh [base_branch] [provider]
 
 set -euo pipefail  # Exit on error, undefined vars, and pipe failures
 
@@ -249,15 +249,16 @@ format_api_response() {
 send_api_request() {
     local diff_content="$1"
     local rules_content="$2"
+    local provider="$3"
     
     log_info "Creating JSON payload..."
     
     # Create JSON payload using jq for proper escaping
     local json_payload
-    if ! json_payload=$(printf '%s\0%s\0%s' "$diff_content" "$rules_content" "Violations" | \
+    if ! json_payload=$(printf '%s\0%s\0%s\0%s' "$diff_content" "$rules_content" "Violations" "$provider" | \
         jq -Rs '
-            split("\u0000") as [$changeSet, $rules, $filterBy] |
-            {changeSet: $changeSet, rules: $rules, filterBy: $filterBy}
+            split("\u0000") as [$changeSet, $rules, $filterBy, $provider] |
+            {changeSet: $changeSet, rules: $rules, filterBy: $filterBy, provider: $provider}
         '); then
         log_error "Failed to create JSON payload"
         return 1
@@ -321,8 +322,9 @@ display_content() {
 # Main execution
 main() {
     local base_branch="$1"
+    local provider="${2:-openai}"
     
-    log_info "Starting rule review process..."
+    log_info "Starting rule review process with provider: $provider..."
     
     # Get git diff
     local diff_content
@@ -354,7 +356,7 @@ main() {
     display_content "Combined Rules Content:" "$rules_content"
     
     # Send API request
-    if ! send_api_request "$diff_content" "$rules_content"; then
+    if ! send_api_request "$diff_content" "$rules_content" "$provider"; then
         exit 1
     fi
 }
@@ -377,5 +379,5 @@ check_dependencies() {
 # Script entry point
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     check_dependencies
-    main "${1:-}"
+    main "${1:-}" "${2:-}"
 fi 
