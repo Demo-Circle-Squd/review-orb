@@ -380,5 +380,5 @@ check_dependencies() {
 # Script entry point
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     check_dependencies
-    main
+    main "$@"
 fi 

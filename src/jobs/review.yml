@@ -9,7 +9,6 @@ parameters:
     type: string
     default: "origin/main"
     description: "Base branch to compare against for git diff (e.g., 'origin/main', 'origin/develop')"
-  
   provider:
     type: enum
     enum: ["openai", "claude", "gemini"]
