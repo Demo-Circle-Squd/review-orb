@@ -3,6 +3,7 @@
 # Rule Review Script
 # This script captures git diff and sends it to the API for rule review
 # Usage: ./rule-review.sh [base_branch] [provider]
+# Environment Variables: BASE_BRANCH, PROVIDER
 
 set -euo pipefail  # Exit on error, undefined vars, and pipe failures
 
@@ -321,8 +322,8 @@ display_content() {
 
 # Main execution
 main() {
-    local base_branch="$1"
-    local provider="${2:-openai}"
+    local base_branch="${BASE_BRANCH:-${1:-$DEFAULT_BASE_BRANCH}}"
+    local provider="${PROVIDER:-${2:-openai}}"
     
     log_info "Starting rule review process with provider: $provider..."
     
@@ -379,5 +380,5 @@ check_dependencies() {
 # Script entry point
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     check_dependencies
-    main "${1:-}" "${2:-}"
+    main
 fi 
