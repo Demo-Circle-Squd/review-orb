@@ -1,0 +1,39 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+
+# YAML Formatting Rules for yamllint Compliance
+
+## File Formatting
+
+- All YAML files must end with a single newline character
+- Use consistent indentation (2 spaces for YAML files)
+- Maximum line length should not exceed 200 characters
+
+## YAML Syntax Standards
+
+- Use proper YAML syntax and structure
+- Ensure consistent spacing around colons and dashes
+- Use double quotes for strings containing special characters
+- Maintain consistent indentation levels throughout the file
+
+## CircleCI Orb Specific Rules
+
+- Command parameters should be properly typed (string, enum, etc.)
+- Include statements must be on their own line without mixing with other commands
+- Environment variables should be passed separately from include statements
+- All orb components (jobs, commands, executors) must have descriptions
+
+## Code Quality
+
+- Avoid inline comments that break YAML structure
+- Use meaningful names for parameters and steps
+- Ensure all required parameters have appropriate defaults where applicable
+
+## File Organization
+
+- Keep related configuration grouped together
+- Use consistent naming conventions across all YAML files
+- Maintain proper file structure following CircleCI orb standards
