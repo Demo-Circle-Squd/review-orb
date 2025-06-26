@@ -1,7 +1,7 @@
 description: >
   Job to review git diff against cursor rules using the circlet.ai API.
   Automatically reads rules from .cursorrules and .cursor/rules directory.
-  
+
 executor: default
 
 parameters:
@@ -13,5 +13,5 @@ parameters:
 steps:
   - checkout
   - review:
-      base_branch: << parameters.base_branch >> 
+      base_branch: << parameters.base_branch >>
       provider: << parameters.provider >>

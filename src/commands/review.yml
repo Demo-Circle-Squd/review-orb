@@ -1,13 +1,13 @@
 description: >
   This command will review git diff against cursor rules using the circlet.ai API.
   It automatically reads rules from .cursorrules and .cursor/rules directory.
-  
+
 parameters:
   base_branch:
     type: string
     default: "origin/main"
     description: "Base branch to compare against for git diff (e.g., 'origin/main', 'origin/develop')"
-  
+
   provider:
     type: enum
     enum: ["openai", "claude", "gemini"]
@@ -16,7 +16,7 @@ parameters:
 
 steps:
   - checkout
-  
+
   - run:
       name: Run Rule Review
       command: <<include(scripts/review.sh)>> << parameters.base_branch >> << parameters.provider >>

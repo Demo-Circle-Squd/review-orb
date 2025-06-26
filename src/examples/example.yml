@@ -11,28 +11,28 @@ usage:
   workflows:
     code-review-workflow:
       jobs:
-        
+
         # Review against main branch with default OpenAI provider
         - rule-review/review
-        
+
         # Review with Claude provider
         - rule-review/review:
             provider: "claude"
-        
+
         # Review with Gemini provider
         - rule-review/review:
             provider: "gemini"
-            
+
         # Review against develop branch with specific provider
         - rule-review/review:
             base_branch: "origin/develop"
             provider: "claude"
-        
+
         # Review against a specific branch with OpenAI
         - rule-review/review:
             base_branch: "origin/feature/base-implementation"
             provider: "openai"
-        
+
         # Review in a workflow with other jobs
         - rule-review/review:
             base_branch: "origin/main"
