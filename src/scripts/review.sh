@@ -256,10 +256,10 @@ send_api_request() {
     
     # Create JSON payload using jq for proper escaping
     local json_payload
-    if ! json_payload=$(printf '%s\0%s\0%s\0%s' "$diff_content" "$rules_content" "Violations" "$provider" | \
+    if ! json_payload=$(printf '%s\0%s\0%s' "$diff_content" "$rules_content" "Violations" | \
         jq -Rs '
-            split("\u0000") as [$changeSet, $rules, $filterBy, $provider] |
-            {changeSet: $changeSet, rules: $rules, filterBy: $filterBy, provider: $provider}
+            split("\u0000") as [$changeSet, $rules, $filterBy] |
+            {changeSet: $changeSet, rules: $rules, filterBy: $filterBy}
         '); then
         log_error "Failed to create JSON payload"
         return 1
@@ -325,7 +325,8 @@ main() {
     local base_branch="${BASE_BRANCH:-${1:-$DEFAULT_BASE_BRANCH}}"
     local provider="${PROVIDER:-${2:-openai}}"
     
-    log_info "Starting rule review process with provider: $provider..."
+    log_info "Starting rule review process..."
+    log_info "Provider configured: $provider"
     
     # Get git diff
     local diff_content
