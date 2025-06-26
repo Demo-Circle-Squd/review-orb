@@ -28,7 +28,7 @@ jobs:
     steps:
       - checkout
       # Run your orb's commands to validate them.
-      - review/greet
+      - review/review
 workflows:
   test-deploy:
     jobs:
